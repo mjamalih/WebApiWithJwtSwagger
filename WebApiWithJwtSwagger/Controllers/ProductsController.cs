@@ -22,7 +22,31 @@ namespace WebApiWithJwtSwagger.Controllers
             _context = context;
         }
 
-        
+
+        //[HttpGet("{m}")]
+        //public async Task<ActionResult> PostTest(int m)
+        //{
+        //    //var p=_context.Products.Find(m);
+        //    //_context.Products.Add(p);
+        //    //await _context.SaveChangesAsync();
+
+        //    //return p;
+        //    return Ok("Excellent");
+        //}
+
+        //[HttpGet]
+        //public async Task<ActionResult> GetTest()
+        //{
+        //    return Ok("Excellent");
+        //}
+
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Products>>> GetTest2()
+        //{
+        //    RedirectToAction("PostTest",new {x=12});
+        //    return Ok("Excellent");
+        //}
+
         // GET: api/Products
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Products>>> GetProducts()

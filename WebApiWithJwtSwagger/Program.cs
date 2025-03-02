@@ -8,11 +8,15 @@ using Microsoft.AspNetCore.Identity;
 using WebApiWithJwtSwagger.Data;
 using WebApiWithJwtSwagger.Areas.Identity.Data;
 using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
+using WebApiWithJwtSwagger.Interfaces;
+using WebApiWithJwtSwagger.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("WebApiWithJwtSwaggerContextConnection") ?? throw new InvalidOperationException("Connection string 'WebApiWithJwtSwaggerContextConnection' not found.");
 
 builder.Services.AddDbContext<WebApiWithJwtSwaggerContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddScoped<IPaymentRequestService, PaymentRequestService>();
 
 builder.Services.AddDefaultIdentity
     <WebApiWithJwtSwaggerUser>(options => options.SignIn.RequireConfirmedAccount = true).
@@ -20,7 +24,25 @@ builder.Services.AddDefaultIdentity
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+//builder.Services.AddControllers();
+
+
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+    })
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    });
+
+ //   AddNewtonsoftJson(options =>
+ //options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApiWithJwtSwagger.Models;
 
@@ -11,9 +12,11 @@ using WebApiWithJwtSwagger.Models;
 namespace WebApiWithJwtSwagger.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20250228115642_init_db")]
+    partial class init_db
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,31 +119,6 @@ namespace WebApiWithJwtSwagger.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("WebApiWithJwtSwagger.Models.SubModelDetail", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Key")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("RequestPaymentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Value")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RequestPaymentId");
-
-                    b.ToTable("SubModelDetail");
-                });
-
             modelBuilder.Entity("WebApiWithJwtSwagger.Models.UserInfo", b =>
                 {
                     b.Property<int>("UserId")
@@ -171,20 +149,9 @@ namespace WebApiWithJwtSwagger.Migrations
                     b.Navigation("PaymentRequest");
                 });
 
-            modelBuilder.Entity("WebApiWithJwtSwagger.Models.SubModelDetail", b =>
-                {
-                    b.HasOne("WebApiWithJwtSwagger.Models.PaymentRequest", "PaymentRequest")
-                        .WithMany("SubModelDetails")
-                        .HasForeignKey("RequestPaymentId");
-
-                    b.Navigation("PaymentRequest");
-                });
-
             modelBuilder.Entity("WebApiWithJwtSwagger.Models.PaymentRequest", b =>
                 {
                     b.Navigation("AmountDetails");
-
-                    b.Navigation("SubModelDetails");
                 });
 #pragma warning restore 612, 618
         }

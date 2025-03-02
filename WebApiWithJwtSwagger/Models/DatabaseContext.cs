@@ -10,5 +10,8 @@ namespace WebApiWithJwtSwagger.Models
         }
       public  DbSet<Products> Products { get; set; }  
       public  DbSet<UserInfo> Users { get; set; }  
+      public  DbSet<PaymentRequest> PaymentRequest { get; set; }  
+      public  DbSet<AmountDetail> AmountDetail { get; set; }  
+      public  DbSet<SubModelDetail> SubModelDetail { get; set; }  
     }
 }
