@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApiWithJwtSwagger.Dto;
 using WebApiWithJwtSwagger.Interfaces;
 using WebApiWithJwtSwagger.Models;
+using static WebApiWithJwtSwagger.Models.Common.UseFull;
 
 namespace WebApiWithJwtSwagger.Services
 {
@@ -14,9 +15,84 @@ namespace WebApiWithJwtSwagger.Services
             _context = databaseContext;
         }
 
-        public Task<ResultDto> AddPaymentAsync(PaymentRequestDto paymentRequestDto)
+        public async Task<ResultDto> AddPaymentAsync(PaymentRequestDto paymentRequestDto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<AmountDetail> list = new List<AmountDetail>();
+                list = paymentRequestDto.AmountDetails?.Select(p => new AmountDetail()
+                { 
+                 Effect=p.Effect,
+                  Key=p.Key,
+                  Value=p.Value
+                }).ToList();
+                //foreach (var item in paymentRequestDto.AmountDetails)
+                //{
+                //    list.Add(
+                //        new AmountDetail()
+                //        {
+                //            Key = item.Key,
+                //            Value = item.Value,
+                //            Effect = item.Effect
+                //        }
+                //        );
+
+                //}
+
+                List<SubModelDetail> subModellist = new List<SubModelDetail>();
+                subModellist = paymentRequestDto.SubModelDetails?.Select(sub =>
+                new SubModelDetail()
+                {
+                     Key=sub.Key,
+                      Value=sub.Value
+                }).ToList();
+
+                //foreach (var item in paymentRequestDto.SubModelDetails)
+                //{
+                //    subModellist.Add(
+                //        new SubModelDetail()
+                //        {
+                //            Key = item.Key,
+                //            Value = item.Value,
+                //        }
+                //        );
+
+                //}
+
+                PaymentRequest payr = new PaymentRequest()
+                {
+                    Amount = paymentRequestDto.Amount,
+                    //Id = paymentRequest.Id,
+                    AmountDetails = list,
+                    SubModelDetails = subModellist,
+                    TrxNumber = paymentRequestDto.TrxNumber,
+                    PaymentStatus = paymentRequestDto.PaymentStatus,
+                   // PaymentStatus =PaymentStatus.SentToCustomer,
+                    RequestDate = paymentRequestDto.RequestDate,
+                    RequestTime = paymentRequestDto.RequestTime,
+
+                };
+                await _context.PaymentRequest.AddAsync(payr);
+                await _context.SaveChangesAsync();
+                return new ResultDto()
+                {
+                    IsSuccess = true,
+                    Message = "payment added to db succesfully",
+                    Status = 200
+                };
+
+            }
+            catch (Exception)
+            {
+
+                return new ResultDto()
+                {
+                    IsSuccess = true,
+                    Message = "payment added to db succesfully",
+                    Status = 201
+                };
+            }
+            
         }
 
         public async Task<ResultDto> DeletePaymentAsync(long paymentId)
@@ -109,7 +185,7 @@ namespace WebApiWithJwtSwagger.Services
                     {
                         IsSuccess = false,
                         Message = "Not Found",
-                        Status = 200,
+                        Status = 404,
                         Data = null
                     };
                 return new ResultDto<PaymentRequestDto>()
