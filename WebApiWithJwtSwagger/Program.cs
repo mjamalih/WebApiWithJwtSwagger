@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("Db") ?? throw new InvalidOperationException("Connection string 'ContextConnection' not found.");
 
-builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<PaymentDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddScoped<IPaymentRequestService, PaymentRequestService>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>

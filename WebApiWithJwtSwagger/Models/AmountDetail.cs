@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebApiWithJwtSwagger.Models
+namespace  WebApiWithJwtSwagger.Models
 {
     public class AmountDetail
     {

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using  WebApiWithJwtSwagger.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -6,9 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static WebApiWithJwtSwagger.Models.Common.UseFull;
+using static WebApiWithJwtSwagger.UseFull;
+//using static WebApiWithJwtSwagger.Models.Common.UseFull;
 
- namespace WebApiWithJwtSwagger.Models
+namespace  WebApiWithJwtSwagger.Server.Models.Config
 {
     public class PaymentRequestConfig : IEntityTypeConfiguration<PaymentRequest>
     {

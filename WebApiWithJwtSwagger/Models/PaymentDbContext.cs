@@ -1,24 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
+﻿using  WebApiWithJwtSwagger.Models;
+using  WebApiWithJwtSwagger.Server.Models.Config;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApiWithJwtSwagger.Models
 {
-    public class DatabaseContext : DbContext
-    {
-        public DatabaseContext(DbContextOptions obtion) : base(obtion)
-        {
 
-        }
-        public DbSet<Products> Products { get; set; }
-        // public  DbSet<UserInfo> Users { get; set; }  
+    public class PaymentDbContext(DbContextOptions<PaymentDbContext> options) : DbContext(options)
+    {
         public DbSet<PaymentRequest> PaymentRequest { get; set; }
         public DbSet<AmountDetail> AmountDetail { get; set; }
         public DbSet<SubModelDetail> SubModelDetail { get; set; }
-        public DbSet<UserInfo> Users { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
             EntitiesConfigs(modelBuilder);
         }
         private static void EntitiesConfigs(ModelBuilder modelBuilder)
@@ -27,11 +21,3 @@ namespace WebApiWithJwtSwagger.Models
         }
     }
 }
-
-
-
-
-//-- عدم نمایش اطلاعات با برچسب حذف شده
-//ApplyQueryFilter(modelBuilder);
-//        }
-

@@ -1,4 +1,4 @@
-﻿namespace WebApiWithJwtSwagger.Models.Common
+﻿namespace  WebApiWithJwtSwagger.Models.Common
 {
     public abstract class BaseEntity<TKey>
     {

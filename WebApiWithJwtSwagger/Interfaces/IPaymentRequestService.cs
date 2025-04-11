@@ -5,11 +5,16 @@ namespace WebApiWithJwtSwagger.Interfaces
 {
     public interface IPaymentRequestService
     {
-       // public  ResultDto<List<PaymentRequestDto>> GetAll();
-        public Task< ResultDto<List<PaymentRequestDto>>> GetAll();
-        public Task<ResultDto> AddPaymentAsync(PaymentRequestDto paymentRequestDto);
-        public Task<ResultDto> DeletePaymentAsync(long  paymentId);
-        public  Task<ResultDto> UpdatePaymentAsync(long id, PaymentRequestDto paymentRequestDto);
-        public Task<ResultDto<PaymentRequestDto>> GetPaymentAsync(long id);
+        // public  ResultDto<List<PaymentRequestDto>> GetAll();
+        public Task<List<PaymentRequestDto>> GetAll();
+        public Task AddPaymentAsync(PaymentRequestDto paymentRequestDto);
+        public Task DeletePaymentAsync(long paymentId);
+        public Task UpdatePaymentAsync(long id, PaymentRequestDto paymentRequestDto);
+        public Task<PaymentRequestDto> GetPaymentAsync(long id);
+
+        public Task DoPaymentAsync();
+        public Task ZPayment();
+        public Task VerifyByHttpClient();
+        public Task VerifyPayment();
     }
 }

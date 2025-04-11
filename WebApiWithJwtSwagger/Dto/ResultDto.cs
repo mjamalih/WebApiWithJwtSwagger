@@ -17,7 +17,7 @@
 
         public T Data { get; set; }
     }
-    public class ResultDto:ResultDto<string>
+    public class ResultDto : ResultDto<string>
     {
 
     }
